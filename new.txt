@@ -1,0 +1,34 @@
+oracle Edasharedb_1612  DATA@MARKT_NEW
+135.149.64.232  EDA_TISS  E1612da_6ISS!
+135.149.64.95    EDA_DUANHW Ozts7Di*VC--> 9SNs19F&pF
+135.149.64.128 EDA_DUANHW  Ozts7Di*VC--> F3mQ^6%YOH
+135.149.64.233 eda_admin E1612da_4315!
+135.149.64.59 EDA_DUANHW Duanhw@88.com F3mQ^6%YOH
+F6N4X$Sn mcafee123!@#
+Qy2qzgxC1d6BANQB MD5_95_SCRIPT
+数据门户 EDA_DUANHW Duanhw@1613-->Duanhw@1612
+135.149.64.97 ftpadmin 5ehKWza4C*  12222
+
+10.254.173.122 
+10.142.106.68 ftp862	ftp862#$!%@
+ds_ftp_862  Nm&ZyC_19 
+
+--人力数据
+132.63.10.96
+ds_ftp_862 ds_ftp_862  Nm&ZyC_19 
+
+OA账号 odsxt.gs  Odsxt@135!
+
+--携号转网
+sftp plsmsftp@135.149.34.102 22    
+NP_gs.96#
+ftp  135.149.34.102 10018
+plsmsftp_crm
+NP_crmgs#@!102
+cd /app/plsmsftp/day/biz
+
+EOP
+10.128.21.67:2121
+GSBUS3602820190404
+K5Xj4SoXo11
+
