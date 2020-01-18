@@ -77,7 +77,8 @@ msg(){
 }
 
 #execute block
-while 
+#execute block
+while : 
 do
 	msg "Start..."
 	readdir
