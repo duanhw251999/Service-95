@@ -62,12 +62,15 @@ getSize(){
 }
 
 write2verf(){
-    cur_dateTime0="`date +%Y%m%d%H%m%s`"  
-	name=`printf '%-40s' ${1}`
-	size=`printf '%-20s' ${2}`
-	rows=`printf '%-20s' ${3}`
-	timestamp=`printf '%-20s' ${4}${cur_dateTime0}`
-	echo ${name}${size}${rows}${timestamp} > ${5}
+        cur_dateTime0="`date +%Y%m%d%H%m%s`"  
+	#name=`printf '%-40s' ${1}`
+	#size=`printf '%-40s' ${2}`
+	#rows=`printf '%-40s' ${3}`
+	#timestamp=`printf '%-40s' ${4}${cur_dateTime0}`
+	#echo ${name}${size}${rows}${timestamp} > ${5}
+	#echo ${name}${size}${rows}${timestamp}
+	#`printf '%-40s%-40s%-20s%-20s' ${1}${2}${3}${4}${cur_dateTime0}`
+        printf '%-40s%-20s%-20s%-20s' ${1} ${2} ${3} ${4}${cur_dateTime0} > ${5}
 }
 
 msg(){
