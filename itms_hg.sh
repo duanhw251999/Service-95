@@ -28,13 +28,13 @@ fi
 }
 
 execute_fun(){
-    f=${1}
-    dat=$(convert_dat ${f})
+        f=${1}
+        dat=$(convert_dat ${f})
 	verf="i_${f:8:8}_13096_00.verf"
 	echo ${verf}"++++++++"
 	name=${dat}
-	size=$(getSize ${path}${f})
-	rows=`sed -n '$=' ${path}${f}`
+	size=$(getSize ${path}${dat})
+	rows=`sed -n '$=' ${path}${dat}`
 	datestr=${f:8:8}
 	write2verf ${name} ${size} ${rows} ${datestr} ${verf}
 }
