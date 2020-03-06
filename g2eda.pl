@@ -14,7 +14,7 @@ my %path=('remote'=>'/'
 ,'record'=>'/pardata/EDASCRIPT/publisher0/g2eda/'
 ,'log'=>'/pardata/EDASCRIPT/publisher0/g2eda/log/');
 
-my @remote_files=('WUHAN_PNEUMONIA_OUT');
+my @remote_files=('PNEUMONIA','broadband_speed');
 
 #创建ftp对象
 my $ftp;
@@ -130,12 +130,31 @@ sub msg{
 	print "\n[${timpstamp}] $message...\n";
 }
 
+sub SHARE_DATFA{
+	  msg("***********************************************************");
+	  msg("SHARE DATA START...");
+	  msg("***********************************************************");
+	  chdir($path{'localdir'});
+	  `cp broadband_speed* /pardata/EDADATA/SHARE/TYDK`
+}
+
+sub BACKUP_DATA{
+	  msg("***********************************************************");
+	  msg("BACKUP DATA START...");
+	  msg("***********************************************************");	
+	  chdir($path{'localdir'});
+    my $result=`mv broadband_speed*  $path{'back'}`;
+	  print $result;
+}
+
 sub main(){
 	while(1==1){
-		  msg("***********************************************************");
+	    msg("***********************************************************");
       msg("She prompt PID==>	$$  duanhw ");
       msg("***********************************************************");
 		  download_hour();
+		  SHARE_DATFA();
+		  BACKUP_DATA();
 		  msg("1 hour later continue");
 		  sleep(3600);
 	}
