@@ -39,4 +39,9 @@ getSize(){
   return $size
 }
 
-echo $(valstr '/pardata/EDADATA/SHARE/BIGDATA/' 'PNEUMONIA_INT11_ROAMING_BACK_20200326_20200325_862_001.TXT')
+msg(){
+  cur_dateTime="`date +%Y%m%d,%H:%m:%s`"  
+  PID=$$
+  echo "[${cur_dateTime}] $PID " ${1}
+}
+
