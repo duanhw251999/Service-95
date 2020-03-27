@@ -53,6 +53,13 @@ rename_dat(){
 		fi
 	
 	dat_name=${dat_name//.TXT/.DAT}
+	#PNEUMONIA_INT2_WUHAN_1_DETAIL_20200129_20200128_862_001.TXT
+	#TB_WUHAN_TXT4.20200327.20200326.862.001.DAT 
+	#TB_WUHAN_TXT4 20200327 20200326 862 001 DAT
+	
+	datarr=(${dat_name//./ })
+	
+	dat_name="${datarr[0]}.${datarr[1]}.${datarr[2]}.00.001.${datarr[4]}.862.DAT"
 
 	mv ${path_data}${txt_name}  ${path_data}${dat_name}
 	echo $dat_name 
@@ -64,7 +71,7 @@ create_check(){
    arr=(${dat_name//./ })
    check_name="${arr[0]}.${arr[1]}.${arr[2]}.00.000.000.862.CHECK"
    touch ${path_data}${check_name}
-   echo ${dat_name} >> ${path_data}${check_name}
+   echo ${dat_name} > ${path_data}${check_name}
    echo "${check_name} Finish..."
 }
 
