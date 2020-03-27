@@ -24,6 +24,10 @@ valstr(){
 
 getRow(){
   row=`sed -n '$=' ${1}`
+  if [[ $row=='' ]]
+  then
+     row=0
+  fi
   echo $row
 }
 
