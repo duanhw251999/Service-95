@@ -13,18 +13,19 @@ find_str(){
      fi
 }
 
-valstr(){
+valstr2(){
   name=$2
   size=$(getSize $1$2)
   row=$(getRow $1$2)
   cur_date=`date -d "-1 day" +%Y%m%d`
   timestamp="`date +%Y%m%d%H%m%s`"
-  printf '%-40s%-20s%-20s%-20s' ${name} ${size} ${row} ${cur_date}${timestamp}  
+  printf '%-60s%-20s%-20s%-20s%-20s' ${name} ${size} ${row} ${cur_date} ${timestamp}
 }
 
 getRow(){
-  row=`sed -n '$=' ${1}`
-  if [[ $row=='' ]]
+  file=${1}${2}
+  row=`sed -n '$=' ${file}`
+  if [[ -z  "$row" ]]
   then
      row=0
   fi
@@ -36,11 +37,22 @@ getSize(){
   arr=(${sizestr// /})
   size=${arr[0]}
   echo "${size}"
-  return $size
 }
 
+valstr(){
+  name=$2
+  size=$(getSize $1$2)
+  row=$(getRow $1$2)
+  cur_date=`date -d "-1 day" +%Y%m%d`
+  timestamp="`date +%Y%m%d%H%m%s`"
+  #printf '%-40s%-20s%-20s%-20s-20s' ${name} ${size} ${row} ${cur_date} ${timestamp}
+  echo "${name}|${size}|${row}|${cur_date}|${timestamp} "
+}
+
+
+
 msg(){
-  cur_dateTime="`date +%Y%m%d,%H:%m:%s`"  
+  cur_dateTime="`date +%Y%m%d,%H:%m:%s`"
   PID=$$
   echo "[${cur_dateTime}] $PID " ${1}
 }
