@@ -54,7 +54,7 @@ rename_dat(){
 	
 	dat_name=${dat_name//.TXT/.DAT}
 
-	cp ${path_data}${txt_name}  ${path_data}${dat_name}
+	mv ${path_data}${txt_name}  ${path_data}${dat_name}
 	echo $dat_name 
 }
 
@@ -80,4 +80,10 @@ create_val(){
 
 # execute block
 
-readdir ${path_data}
+while : 
+do
+	msg "Start..."
+	readdir ${path_data}
+	msg "End..."
+	sleep 3600
+done
