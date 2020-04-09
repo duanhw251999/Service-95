@@ -1,8 +1,9 @@
+#----g2eda.pl
 path=/pardata/EDADATA/INTERFACE/OTHER/DATA/
 path2=/pardata/EDADATA/INTERFACE/OTHER/BACKUP/
 cd  $path
 
-remote_files=("WUHAN_PNEUMONIA_OUT" "Itms_hg")
+remote_files=("cloud_busi_manager_collect_day" "Itms_hg")
 
 matching(){
   file0=${1}
@@ -58,6 +59,7 @@ execute_fun(){
   name=""
   size=""
   datestr=""
+  
   if [[ "$fhead" == "Itms" ]];then
      dat=$(convert_dat ${f})
      verf="i_${f:8:8}_13096_00.verf"
@@ -65,11 +67,11 @@ execute_fun(){
      datestr=${f:8:8}
   fi
   
-  if [[ "$fhead" == "WUHA" ]];then
+  if [[ "$fhead" == "clou" ]];then
      dat=$(convert_dat ${f})
-     verf="s_${f:29:8}_13097_00.verf"
+     verf="s_${f:40:8}_13098_00.verf"
      name=${dat}
-     datestr=${f:29:8}
+     datestr=${f:40:8}
   fi
   
   size=$(getSize ${path}${dat})
@@ -85,8 +87,8 @@ convert_dat(){
      dat_name="i_${file0:8:8}_13096_00_001.dat"
   fi
   
-  if [[ "$fhead" == "WUHA" ]];then
-     dat_name="s_${file0:29:8}_13097_00_001.dat"
+  if [[ "$fhead" == "clou" ]];then
+     dat_name="s_${file0:40:8}_13098_00_001.dat"
   fi
   `cp ${path}${file0} ${path}${dat_name}`
   echo ${dat_name}
