@@ -14,7 +14,7 @@ my %path=('remote'=>'/'
 ,'record'=>'/pardata/EDASCRIPT/publisher0/g2eda/'
 ,'log'=>'/pardata/EDASCRIPT/publisher0/g2eda/log/');
 
-my @remote_files=('PNEUMONIA','broadband_speed');
+my @remote_files=('PNEUMONIA','broadband_speed','cloud_busi_manager_collect_day');
 
 #创建ftp对象
 my $ftp;
@@ -53,7 +53,7 @@ sub download_hour #下载文件
   2.进入当天目录读取所有文件，并且筛选14个分公司
   3.如果14个分公司齐全，开始下载数据
 =cut
-   my $current_date=strftime("%Y%m%d",localtime(time()-(3600*24)*0));
+     my $current_date=strftime("%Y%m%d",localtime(time()-(3600*24)*0));
 	 my $ftp=getFtp();#ftp对象
 	 my $remote=$path{'remote'};#远程路径
 	 my @downlist=();#下载文件列表
@@ -149,14 +149,14 @@ sub BACKUP_DATA{
 
 sub main(){
 	while(1==1){
-	    msg("***********************************************************");
+	  msg("***********************************************************");
       msg("She prompt PID==>	$$  duanhw ");
       msg("***********************************************************");
 		  download_hour();
 		  SHARE_DATFA();
 		  BACKUP_DATA();
 		  msg("1 hour later continue");
-		  sleep(3600);
+		  sleep(5);
 	}
 }
 
