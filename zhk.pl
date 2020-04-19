@@ -17,18 +17,20 @@ main();
 
 
 #=====================================================================
-sub main()	#¶¨Òåmainº¯Êı
+sub main()	#å®šä¹‰mainå‡½æ•°
 #=====================================================================
 {  
   
-   # 1.ĞŞ¸ÄËùÓĞ×ÓÄ¿Â¼µÄÃû³Æ
+   # 1.ä¿®æ”¹æ‰€æœ‰å­ç›®å½•çš„åç§°
    modify_sub_name();
-   # 2.½øÈëÕâĞ©×ÓÄ¿Â¼ÕÒµ½txtÎÄ¼ş£¬½«ÆäĞŞ¸ÄÎª½Ó¿ÚÃû³Æ
+   # 2.è¿›å…¥è¿™äº›å­ç›®å½•æ‰¾åˆ°txtæ–‡ä»¶ï¼Œå°†å…¶ä¿®æ”¹ä¸ºæ¥å£åç§°
    modify_txt_dat();
-   # 3.½«ÕâĞ©ÎÄ¼ş½øĞĞÈ¥µôÇ°Á½ĞĞ
+   # 3.å°†è¿™äº›æ–‡ä»¶è¿›è¡Œå»æ‰å‰ä¸¤è¡Œ
     cut_dat();
-   # 4.Éú³ÉdirÎÄ¼ş
+   # 4.ç”Ÿæˆdiræ–‡ä»¶
      buildDir();
+   # 5.ç§»åŠ¨æ–‡ä»¶
+   abc7788();
 }
 
 sub modify_sub_name
@@ -141,12 +143,12 @@ sub cut_tworow{
 
 sub getFileName{
 	my ($path)=@_;
-	my @Name = split(/\//,$path); #½«path°´¡°\¡±·Ö¸î£¬µÃµ½Ò»¸öÊı×é£¬@±íÊ¾Êı×é
-	my $num = 1; #ÒòÎªperlÊı×éÊÇ´Ó0¿ªÊ¼£¬Ò»»áĞèÒª½«Êı×éµÄ³¤¶È¼õ1
-	my $count = @Name;  #»ñÈ¡Êı×éµÄ³¤¶È
-	my $ind = $count-$num; #perlÁ½ÊıÏà¼õ
-	my $fileName = $Name[$ind]; #×îÖÕ»ñÈ¡ÎÄ¼şÃû
-	return  $fileName #´òÓ¡½á¹û
+	my @Name = split(/\//,$path); #å°†pathæŒ‰â€œ\â€åˆ†å‰²ï¼Œå¾—åˆ°ä¸€ä¸ªæ•°ç»„ï¼Œ@è¡¨ç¤ºæ•°ç»„
+	my $num = 1; #å› ä¸ºperlæ•°ç»„æ˜¯ä»0å¼€å§‹ï¼Œä¸€ä¼šéœ€è¦å°†æ•°ç»„çš„é•¿åº¦å‡1
+	my $count = @Name;  #è·å–æ•°ç»„çš„é•¿åº¦
+	my $ind = $count-$num; #perlä¸¤æ•°ç›¸å‡
+	my $fileName = $Name[$ind]; #æœ€ç»ˆè·å–æ–‡ä»¶å
+	return  $fileName #æ‰“å°ç»“æœ
 }
 
 sub getFileSize{
@@ -293,8 +295,8 @@ sub touch_file_verf
 	for (my $i=0;$i<13;$i=$i+1){
 		print NEWFILE  " ";
 	}
-	my $d1=Get_before_time(1);       #¸³Öµ Êı¾İÎÄ¼şÈÕÆÚ   #¼¯ÍÅÊı¾İÈÕÆÚ-1Ìì
-    my $d2=Get_Time(4);     #¸³Öµ Êı¾İÎÄ¼şÉú³ÉÊ±¼ä
+	my $d1=Get_before_time(1);       #èµ‹å€¼ æ•°æ®æ–‡ä»¶æ—¥æœŸ   #é›†å›¢æ•°æ®æ—¥æœŸ-1å¤©
+    my $d2=Get_Time(4);     #èµ‹å€¼ æ•°æ®æ–‡ä»¶ç”Ÿæˆæ—¶é—´
 	print NEWFILE  $d1.$d2;
 	close NEWFILE;
 }
@@ -322,7 +324,7 @@ sub build_dat # s_20190913_12047_00_001.dat  SMSVOLTE_20190913_3935.txt
 
 
 #==================================================================================================
-sub ClearFIles #¸Ãº¯ÊıÊµÏÖ::¸ù¾İ´«µİ½øÀ´µÄÂ·¾¶£¬±éÀúÂ·¾¶ÏÂÔçÓÚ4ÌìµÄÎÄ¼ş£¬½«ÆäÈ«²¿É¾³ı
+sub ClearFIles #è¯¥å‡½æ•°å®ç°::æ ¹æ®ä¼ é€’è¿›æ¥çš„è·¯å¾„ï¼Œéå†è·¯å¾„ä¸‹æ—©äº4å¤©çš„æ–‡ä»¶ï¼Œå°†å…¶å…¨éƒ¨åˆ é™¤
 #==================================================================================================
 {
     my ($path)=@_;
@@ -332,18 +334,18 @@ sub ClearFIles #¸Ãº¯ÊıÊµÏÖ::¸ù¾İ´«µİ½øÀ´µÄÂ·¾¶£¬±éÀúÂ·¾¶ÏÂÔçÓÚ4ÌìµÄÎÄ¼ş£¬½«ÆäÈ«²
 	if(@Files.length>0){
 		my $del_count=0;
 		foreach (@Files){
-		print $_." ½«±»É¾³ı\n";
+		print $_." å°†è¢«åˆ é™¤\n";
 		unlink($path.$_);
 		$del_count++;
 		}
-		print "ÔçÓÚ4ÌìÇ°µÄ".$del_count."¸öÊı¾İÒÑ¾­È«²¿±»ÇåÀí";
+		print "æ—©äº4å¤©å‰çš„".$del_count."ä¸ªæ•°æ®å·²ç»å…¨éƒ¨è¢«æ¸…ç†";
 	}
 	close DIRFILE;
 }
 
 
 #==================================================================================================
-sub Get_before_time  #¸Ãº¯ÊıÊµÏÖ::¸ù¾İ´«µİ½øÀ´µÄ²ÎÊı,ÓÃµ±Ç°Ê±¼ä¼õÈ¥ÏàÓ¦ÌìÊı£¬µÃµ½¶ÔÓ¦ÈÕÆÚ    
+sub Get_before_time  #è¯¥å‡½æ•°å®ç°::æ ¹æ®ä¼ é€’è¿›æ¥çš„å‚æ•°,ç”¨å½“å‰æ—¶é—´å‡å»ç›¸åº”å¤©æ•°ï¼Œå¾—åˆ°å¯¹åº”æ—¥æœŸ    
 #====================================================================================================
 {
     my ($cha)=@_;
@@ -359,7 +361,7 @@ sub Get_before_time  #¸Ãº¯ÊıÊµÏÖ::¸ù¾İ´«µİ½øÀ´µÄ²ÎÊı,ÓÃµ±Ç°Ê±¼ä¼õÈ¥ÏàÓ¦ÌìÊı£¬µÃµ
 
 
 #=================================================
-sub Ftp_put97  #ÉÏ´«ÎÄ¼ş
+sub Ftp_put97  #ä¸Šä¼ æ–‡ä»¶
 #=================================================
 {
 		my $Back_Path=$_[0];
@@ -369,18 +371,18 @@ sub Ftp_put97  #ÉÏ´«ÎÄ¼ş
 		
 		my $ftp = Net::FTP->new ($host,Timeout => 30,Passive=>1) or die "Could not connect.\n";  
 		
-		#µÇÂ¼µ½FTP·şÎñÆ÷  
+		#ç™»å½•åˆ°FTPæœåŠ¡å™¨  
 		$ftp->login($user,$napo) or die "Could not login.\n";  
 		
-		#ÇĞ»»Ä¿Â¼  
+		#åˆ‡æ¢ç›®å½•  
 		$ftp->cwd($remote);  
-		print "[".Get_Time(1)."]"." ¼´½«ÉÏ´«ÎÄ¼ş.\n";
+		print "[".Get_Time(1)."]"." å³å°†ä¸Šä¼ æ–‡ä»¶.\n";
 		opendir(DIRFILE,$Back_Path);
 		my @Files = sort(grep(/.verf$|\.dat$/,readdir(DIRFILE)));
 		foreach my $f(@Files){
 			if($f=~m/$currentDate/){
 				$ftp->put($Back_Path."/".$f) or die "Could not put remotefile\n"; 
-				print "[".Get_Time(1)."]"." $Back_Path/$f ÎÄ¼şÒÑ¾­ÉÏ´«µ½97·şÎñÆ÷.\n";				
+				print "[".Get_Time(1)."]"." $Back_Path/$f æ–‡ä»¶å·²ç»ä¸Šä¼ åˆ°97æœåŠ¡å™¨.\n";				
 			}
 		}
 		$ftp->quit; 
@@ -388,22 +390,22 @@ sub Ftp_put97  #ÉÏ´«ÎÄ¼ş
 
 
 #=================================================
-sub Get_Time	#»ñÈ¡µ±Ç°ÈÕÆÚ
+sub Get_Time	#è·å–å½“å‰æ—¥æœŸ
 #=================================================
 {
-	#print " == 0 == 	Start Get_Time :: »ñÈ¡µ±Ç°ÈÕÆÚ\n";	
-	#flag: 1:»ñÈ¡µ±Ç°ÈÕÆÚ+Ê±¼ä,2:#»ñÈ¡µ±Ç°ÈÕÆÚ,3:»ñÈ¡µ±Ç°Ê±¼ä
+	#print " == 0 == 	Start Get_Time :: è·å–å½“å‰æ—¥æœŸ\n";	
+	#flag: 1:è·å–å½“å‰æ—¥æœŸ+æ—¶é—´,2:#è·å–å½“å‰æ—¥æœŸ,3:è·å–å½“å‰æ—¶é—´
 	my ($flag)=@_;                                                
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
 	$year += 1900;
 	$mon+=1;
 	if ($mon < 10)  { $mon="0".$mon;  } else { $mon=$mon;}
 	if ($mday < 10) { $mday="0".$mday; } else { $mday=$mday; }
-	my $theSysTime1=sprintf("%4d%02d%02d%02d%02d%02d",$year,$mon,$mday,$hour,$min,$sec); #»ñÈ¡µ±Ç°ÈÕÆÚ+Ê±¼ä
-	my $theSysTime2=sprintf("%4d-%02d-%02d %02d:%02d:%02d",$year,$mon,$mday,$hour,$min,$sec); #»ñÈ¡µ±Ç°ÈÕÆÚ+Ê±¼ä
-	my $Sys_Date=sprintf("%4d-%02d-%02d",$year,$mon,$mday);    #»ñÈ¡µ±Ç°ÈÕÆÚ YYYY-MM-DD
-	my $Sys_Time=sprintf("%02d:%02d:%02d",$hour,$min,$sec);    #»ñÈ¡µ±Ç°Ê±¼ä
-	my $SysDate=sprintf("%4d%02d%02d",$year,$mon,$mday);    #»ñÈ¡µ±Ç°ÈÕÆÚ    YYYYMMDD
+	my $theSysTime1=sprintf("%4d%02d%02d%02d%02d%02d",$year,$mon,$mday,$hour,$min,$sec); #è·å–å½“å‰æ—¥æœŸ+æ—¶é—´
+	my $theSysTime2=sprintf("%4d-%02d-%02d %02d:%02d:%02d",$year,$mon,$mday,$hour,$min,$sec); #è·å–å½“å‰æ—¥æœŸ+æ—¶é—´
+	my $Sys_Date=sprintf("%4d-%02d-%02d",$year,$mon,$mday);    #è·å–å½“å‰æ—¥æœŸ YYYY-MM-DD
+	my $Sys_Time=sprintf("%02d:%02d:%02d",$hour,$min,$sec);    #è·å–å½“å‰æ—¶é—´
+	my $SysDate=sprintf("%4d%02d%02d",$year,$mon,$mday);    #è·å–å½“å‰æ—¥æœŸ    YYYYMMDD
 	#print " == 1 == 	End Get_Time\n";
 	if($flag == 4){return ($theSysTime1);}
 	if($flag == 1)
@@ -423,7 +425,7 @@ sub Get_Time	#»ñÈ¡µ±Ç°ÈÕÆÚ
 }
 
 #=================================================
-sub Get_LastTime	#»ñÈ¡Ç°Ò»ÌìÈÕÆÚ,ÈÕÆÚ¸ñÊ½±ØĞëÎª'YYYYMMDD'
+sub Get_LastTime	#è·å–å‰ä¸€å¤©æ—¥æœŸ,æ—¥æœŸæ ¼å¼å¿…é¡»ä¸º'YYYYMMDD'
 #=================================================
 {
 	 my $Handle_time =@_;       
@@ -443,12 +445,12 @@ sub Get_LastTime	#»ñÈ¡Ç°Ò»ÌìÈÕÆÚ,ÈÕÆÚ¸ñÊ½±ØĞëÎª'YYYYMMDD'
 
 
 #=================================================
-sub FTP_Upload()	#Êı¾İÉÏ´«,²¢×öÊı¾İ±¸·İ
+sub FTP_Upload()	#æ•°æ®ä¸Šä¼ ,å¹¶åšæ•°æ®å¤‡ä»½
 #=================================================
 {
 	print "\n\n===============================================================================\n";
 	my $theTime=Get_Time(0);
-	print "$theTime == 5 ==  Start FTP_Upload ½«Êı¾İÉÏ´«µ½ETL·şÎñÆ÷\n";
+	print "$theTime == 5 ==  Start FTP_Upload å°†æ•°æ®ä¸Šä¼ åˆ°ETLæœåŠ¡å™¨\n";
 	my $Ftp_Conf=Get_Ftp(1);
 	my ($Ftp_Dir,$Ftp_Host,$Ftp_User,$Ftp_Pass,$Ftp_Prot)=split(/\|/,$Ftp_Conf);
 	my $path0="E:/SMSVOLTE/";
@@ -464,7 +466,7 @@ sub FTP_Upload()	#Êı¾İÉÏ´«,²¢×öÊı¾İ±¸·İ
 		print("	Success Connected to ftp:$Ftp_Host\n");
 		$ftp->cdup();
 		my $remote_direction="/";
-		$ftp->cwd($remote_direction) or die print("	Can't change dir $remote_direction£º$ftp->message");
+		$ftp->cwd($remote_direction) or die print("	Can't change dir $remote_directionï¼š$ftp->message");
 		opendir(FILE,$path0) or die print("	Can't open $Change_Path:$_");
 		chdir($path0); 
 		foreach(readdir(FILE))
@@ -484,10 +486,10 @@ sub FTP_Upload()	#Êı¾İÉÏ´«,²¢×öÊı¾İ±¸·İ
 }
 
 #=================================================
-sub Get_Ftp	#¸Ãº¯ÊıÊµÏÖ::»ñÈ¡FTPÅäÖÃÄÚÈİ 
+sub Get_Ftp	#è¯¥å‡½æ•°å®ç°::è·å–FTPé…ç½®å†…å®¹ 
 #=================================================
 {
-	my ($FtpType) = @_; #FtpType : 1.UÎª´Ó210ÉÏ´«µ½229;2.DÎª´Ó½áËã195ÏÂÔØÊı¾İµ½210
+	my ($FtpType) = @_; #FtpType : 1.Uä¸ºä»210ä¸Šä¼ åˆ°229;2.Dä¸ºä»ç»“ç®—195ä¸‹è½½æ•°æ®åˆ°210
 	my $FtpFileName;
 	if($FtpType == 1)
 		{$FtpFileName = "UpFtp.conf";}
@@ -496,7 +498,7 @@ sub Get_Ftp	#¸Ãº¯ÊıÊµÏÖ::»ñÈ¡FTPÅäÖÃÄÚÈİ
 			if($FtpType == 2)	
 				{$FtpFileName = "DownFtp.conf";}
 			else
-				{print"»ñÈ¡FTP_FILE·½Ê½ÓĞÎó,\$FtpType::$FtpType,Òò¸ÃÊÇ'D'or'U'";}
+				{print"è·å–FTP_FILEæ–¹å¼æœ‰è¯¯,\$FtpType::$FtpType,å› è¯¥æ˜¯'D'or'U'";}
 		}
 	chdir("$Script_Path");
   open(FTPUPLOAD,$FtpFileName);
@@ -515,12 +517,12 @@ sub Get_Ftp	#¸Ãº¯ÊıÊµÏÖ::»ñÈ¡FTPÅäÖÃÄÚÈİ
 }
 
 ####################################################################################################
-#¸Ãº¯ÊıÊµÏÖ::¶ÁÈ¡ÎÄ¼şÂ·¾¶¹¦ÄÜ                                                                      #
+#è¯¥å‡½æ•°å®ç°::è¯»å–æ–‡ä»¶è·¯å¾„åŠŸèƒ½                                                                      #
 sub Get_File_Path
 {
 	print "\n\n===============================================================================\n";	
 	my ($theTime)=Get_Time(1);
-	print "$theTime == 1 == 	Start Get_File_Path :: ¶ÁÈ¡ÎÄ¼şÂ·¾¶\n";
+	print "$theTime == 1 == 	Start Get_File_Path :: è¯»å–æ–‡ä»¶è·¯å¾„\n";
 	open(PATH,'Path.conf');
 	my $Path_Str;	
 	my @Paths=<PATH>;
