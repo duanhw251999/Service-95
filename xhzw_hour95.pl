@@ -3,17 +3,18 @@ use strict;
 use FileHandle;
 use Net::FTP;
 use Cwd;
-use Date::Calc qw(Date_to_Time Time_to_Date Add_Delta_Days);
+use Date::Calc qw(Date_to_Time Time_to_Date Add_Delta_Days Mktime);
 use File::Copy;
 use Encode;
 use DBI;
 use Data::Dumper qw(Dumper);
-use POSIX;
+use POSIX qw(strftime);
 use File::Basename;
 
 my %path=(
 'source'=>'E:/PERSONAL/Duanhw/xhzw/source/',
-'backup'=>'E:/PERSONAL/Duanhw/xhzw/backup/'
+'backup'=>'E:/PERSONAL/Duanhw/xhzw/backup/',
+'record'=>'E:/PERSONAL/Duanhw/xhzw/'
 );
 
 my %conStr=(
@@ -36,8 +37,9 @@ sub connectdb
     return $dbh;
 }
 
+
 ##################################################################
-sub getFtp     #::::::FTPÍ¨ÓÃ·½·¨£¬´´½¨Ò»¸öÍ¨ÓÃFTP¶ÔÏóÓÃÓÚÔ¶³Ì²Ù×÷
+sub getFtp     #::::::FTPé€šç”¨æ–¹æ³•ï¼Œåˆ›å»ºä¸€ä¸ªé€šç”¨FTPå¯¹è±¡ç”¨äºè¿œç¨‹æ“ä½œ
 ##################################################################
 {
 	msg("create ftp connection");
@@ -48,29 +50,29 @@ sub getFtp     #::::::FTPÍ¨ÓÃ·½·¨£¬´´½¨Ò»¸öÍ¨ÓÃFTP¶ÔÏóÓÃÓÚÔ¶³Ì²Ù×÷
 }
 
 #################################################################
-sub download #ÏÂÔØÎÄ¼ş
+sub download #ä¸‹è½½æ–‡ä»¶
 #################################################################
 {
 =pod
-  1.Ñ­»·dayÄ¿Â¼²éÑ¯ÓĞÎŞµ±ÌìÄ¿Â¼
-  2.½øÈëµ±ÌìÄ¿Â¼¶ÁÈ¡ËùÓĞÎÄ¼ş£¬²¢ÇÒÉ¸Ñ¡14¸ö·Ö¹«Ë¾
-  3.Èç¹û14¸ö·Ö¹«Ë¾ÆëÈ«£¬¿ªÊ¼ÏÂÔØÊı¾İ
+  1.å¾ªç¯dayç›®å½•æŸ¥è¯¢æœ‰æ— å½“å¤©ç›®å½•
+  2.è¿›å…¥å½“å¤©ç›®å½•è¯»å–æ‰€æœ‰æ–‡ä»¶ï¼Œå¹¶ä¸”ç­›é€‰14ä¸ªåˆ†å…¬å¸
+  3.å¦‚æœ14ä¸ªåˆ†å…¬å¸é½å…¨ï¼Œå¼€å§‹ä¸‹è½½æ•°æ®
 =cut
-	 my $ftp=getFtp();#ftp¶ÔÏó
-	 my $remote=$conStr{'remotedir'};#Ô¶³ÌÂ·¾¶
-	 my @downlist=();#ÏÂÔØÎÄ¼şÁĞ±í
-	 #»ñÈ¡µ±Ç°ÈÕÆÚ
-   #my $current_date=strftime("%Y%m%d",localtime(time()-(3600*24)*1));
-	 $ftp->cwd($remote) or die ("Can not into remote dir".$!."\n");#½øÈëÔ¶³ÌÂ·¾¶
-	 my @list2=$ftp->ls($remote);#½øÈëµ±Ç°ÈÕÆÚÄ¿Â¼
-   foreach my $f (@list2){#Ñ­»·µ±Ç°Ä¿Â¼ÖĞËùÓĞÎÄ¼ş
+	 my $ftp=getFtp();#ftpå¯¹è±¡
+	 my $remote=$conStr{'remotedir'};#è¿œç¨‹è·¯å¾„
+	 my @downlist=();#ä¸‹è½½æ–‡ä»¶åˆ—è¡¨
+	 #è·å–å½“å‰æ—¥æœŸ
+   my $current_date=strftime("%Y%m%d",localtime(time()-(3600*24)*1));
+	 $ftp->cwd($remote) or die ("Can not into remote dir".$!."\n");#è¿›å…¥è¿œç¨‹è·¯å¾„
+	 my @list2=$ftp->ls($remote);#è¿›å…¥å½“å‰æ—¥æœŸç›®å½•
+   foreach my $f (@list2){#å¾ªç¯å½“å‰ç›®å½•ä¸­æ‰€æœ‰æ–‡ä»¶
    	 my $fn=getFileName($f);
      msg("scan file ".$fn);
-     push(@downlist,$fn);#Ìí¼Óµ½ÏÂÔØÁĞ±í
+     push(@downlist,$fn);#æ·»åŠ åˆ°ä¸‹è½½åˆ—è¡¨
    }
 
-		 my $size=@downlist;#ÏÂÔØÁĞ±í´óĞ¡
-		 if ($size>=1){#¿ØÖÆÎÄ¼şÊıÁ¿
+		 my $size=@downlist;#ä¸‹è½½åˆ—è¡¨å¤§å°
+		 if ($size>=1){#æ§åˆ¶æ–‡ä»¶æ•°é‡
 		    foreach my $f (@downlist){
 		    	if(isExeRecord($f)==0){
 		    			msg("down file ".$f);
@@ -85,7 +87,7 @@ sub download #ÏÂÔØÎÄ¼ş
 }
 
 #################################################################
-sub write_record #Ğ´ÈëÈÕÖ¾
+sub write_record #å†™å…¥æ—¥å¿—
 #################################################################                  
 {
 	 my($str)=@_;
@@ -96,7 +98,7 @@ sub write_record #Ğ´ÈëÈÕÖ¾
 }
 
 #################################################################
-sub isExeRecord #ÊÇ·ñ´æÔÚÈÕÖ¾ÖĞ
+sub isExeRecord #æ˜¯å¦å­˜åœ¨æ—¥å¿—ä¸­
 #################################################################
 {
 	 my $isvalue=0;
@@ -114,21 +116,21 @@ sub isExeRecord #ÊÇ·ñ´æÔÚÈÕÖ¾ÖĞ
 }
 
 ############################################################################################
-sub query #²éÑ¯
+sub query #æŸ¥è¯¢
 ############################################################################################
 {
 =pod	
-	my $sth = $dbh->prepare("SELECT * FROM OTHPDATA.TB_13094_S_RD");   # Ô¤´¦Àí SQL  Óï¾ä
-	$sth->execute();    # Ö´ĞĞ SQL ²Ù×÷
+	my $sth = $dbh->prepare("SELECT * FROM OTHPDATA.TB_13094_S_RD");   # é¢„å¤„ç† SQL  è¯­å¥
+	$sth->execute();    # æ‰§è¡Œ SQL æ“ä½œ
 	 
-	# ×¢ÊÍÕâ²¿·ÖÊ¹ÓÃµÄÊÇ°ó¶¨Öµ²Ù×÷
+	# æ³¨é‡Šè¿™éƒ¨åˆ†ä½¿ç”¨çš„æ˜¯ç»‘å®šå€¼æ“ä½œ
 	# $alexa = 20;
 	# my $sth = $dbh->prepare("SELECT name, url
 	#                        FROM Websites
 	#                        WHERE alexa > ?");
 	# $sth->execute( $alexa ) or die $DBI::errstr;
 	 
-	# Ñ­»·Êä³öËùÓĞÊı¾İ
+	# å¾ªç¯è¾“å‡ºæ‰€æœ‰æ•°æ®
 	while ( my @row = $sth->fetchrow_array() )
 	{
 	       print join('\t', @row)."\n";
@@ -138,24 +140,24 @@ sub query #²éÑ¯
 =cut	
 }
 ############################################################################################
-sub update #¸üĞÂ
+sub update #æ›´æ–°
 ############################################################################################
 {
 	my ($dbh,$sql,@record)=@_;
-	my $sth = $dbh->prepare($sql);   # Ô¤´¦Àí SQL  Óï¾ä
+	my $sth = $dbh->prepare($sql);   # é¢„å¤„ç† SQL  è¯­å¥
 	$sth->execute(@record);
 	$sth->finish();
 	$dbh->commit or die $DBI::errstr;
 }
 
 ############################################################################################
-sub read_dat_file #¶ÁÈ¡Êı¾İÎÄ¼ş²¢ÇÒ²åÈë±í
+sub read_dat_file #è¯»å–æ•°æ®æ–‡ä»¶å¹¶ä¸”æ’å…¥è¡¨  #t_jtd_port_changenet tb_13094_s_rd
 ############################################################################################
 {
 	 my ($dbh,$file)=@_;
 	 my $fileName=getFileName($file);
 	 my $load_date=substr($fileName,3,8);
-	 my $sql="insert into othpdata.TB_13094_S_RD"
+	 my $sql="insert into othpdata.t_jtd_port_changenet_hour "
    	 ."( id,acc_nbr,port_out_network,port_in_network,owner_network,beging_time,load_date)"
    	 ."values"
    	 ."(?,?,?,?,?,?,?)";
@@ -165,11 +167,38 @@ sub read_dat_file #¶ÁÈ¡Êı¾İÎÄ¼ş²¢ÇÒ²åÈë±í
    while(<FILEOUT>){
    	 $count++;
    	 my @temp=split /,/ ,$_;
-   	 push (@temp,$load_date);
+   	 push (@temp,${load_date});#å°†load_dateåŠ å…¥åˆ°æ¯ä¸€æ¡è®°å½•ä¸­å» ${load_date}
+   	 
    	 update($dbh,$sql,@temp);
    }
    close FILEOUT;	
-  msg("¸üĞÂ${count}ĞĞ¼ÇÂ¼!");
+  msg("æ›´æ–°${count}è¡Œè®°å½•!");
+}
+
+############################################################################################
+sub convert_date # Convert To String
+############################################################################################
+{
+  my ($dt)=@_;
+  my ($year,$mon,$day,$hour,$min,$sec);
+  my $str;
+  if(length($dt)==8){
+		$year=substr($dt,0,4);
+		$mon=substr($dt,4,2);
+		$day=substr($dt,6,2);
+		my $time = Mktime($year,$mon,$day,'00','00','00');
+		$str= localtime($time);
+  }else{
+		$year=substr($dt,0,4);
+		$mon=substr($dt,5,2);
+		$day=substr($dt,8,2);
+		$hour=substr($dt,11,2);
+		$min=substr($dt,14,2);
+		$sec=substr($dt,17,2);
+		my $time = Mktime($year,$mon,$day,$hour,$min,$sec);
+		$str= localtime($time);
+  }
+  return strftime "%Y-%m-%d %H:%M:%S", localtime($str);
 }
 
 sub trim 
@@ -181,7 +210,7 @@ sub trim
 } 
 
 ##################################################################
-sub getFileName # Í¨¹ıÈ«Â·¾¶»ñÈ¡ÎÄ¼şÃû
+sub getFileName # é€šè¿‡å…¨è·¯å¾„è·å–æ–‡ä»¶å
 ##################################################################
 {
 	my ($path0)=@_;
@@ -221,24 +250,54 @@ sub loadData
   $dbh->disconnect();		
 }
 
+#################################################################
+sub is_emptydir #åˆ¤æ–­ç›®å½•æ˜¯å¦ä¸ºç©º
+#################################################################
+{
+    my $isvalue=1;
+    my ($dirname)=@_;
+    my @dir_files = <$dirname/*>;
+	if (@dir_files) {                                                                            
+        msg( Dumper @dir_files);     
+	} else {                                                                                                                                                                    
+        msg("empty");
+        $isvalue=0;		
+    }	
+    return $isvalue;	
+}
+
 sub mv2backup
 {
-	 `mv $path{'source'}*.*  $path{'backup'}`;
+	if(is_emptydir($path{'source'})!=0){
+			 `mv $path{'source'}*.*  $path{'backup'}`;
+	}
 }
 
 sub main()
 {
 =pod
-   1. ÏÂÔØÎÄ¼ş
-   2. Èë¿âÎÄ¼ş
-   3. ±¸·İÎÄ¼ş
+   1. ä¸‹è½½æ–‡ä»¶
+   2. å…¥åº“æ–‡ä»¶
+   3. å¤‡ä»½æ–‡ä»¶
+   while(1==1){
+		msg("******************************************************");
+		msg(" PID==>	$$ 13094 duanhw ");
+		msg("******************************************************");
+	  download();
+	  loadData();
+	  mv2backup();
+	  msg("1 hour later continue");
+	  sleep(60*60);
+  }
+   
 =cut
-	msg("******************************************************");
-	msg(" PID==>	$$ 13094 duanhw ");
-	msg("******************************************************");
-  download();
-  loadData();
-  mv2backup();
+		msg("******************************************************");
+		msg(" PID==>	$$ 13094 duanhw ");
+		msg("******************************************************");
+	  download();
+	  loadData();
+	  mv2backup();
+	  msg("1 hour later continue");
 }
 
 main();
