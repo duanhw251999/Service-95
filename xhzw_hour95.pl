@@ -10,7 +10,17 @@ use DBI;
 use Data::Dumper qw(Dumper);
 use POSIX qw(strftime);
 use File::Basename;
+=pod
+select distinct a.load_date,count(*)  from othpdata.t_jtd_port_changenet_hour a 
+group by a.load_date
+order by a.load_date desc;
 
+--某表剔重语句
+delete from  othpdata.t_jtd_port_changenet_hour a WHERE ROWID>
+(SELECT Min(b.ROWID) FROM othpdata.t_jtd_port_changenet_hour b WHERE a.acc_nbr=b.acc_nbr and a.port_in_network=b.port_in_network
+and a.beging_time=b.beging_time and a.owner_network=b.owner_network
+);
+=cut
 my %path=(
 'source'=>'E:/PERSONAL/Duanhw/xhzw/source/',
 'backup'=>'E:/PERSONAL/Duanhw/xhzw/backup/',
