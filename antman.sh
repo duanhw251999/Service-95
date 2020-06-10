@@ -41,6 +41,11 @@ do
 	   echo $file
 	   rm -rf $file
 	 done
+     for file in `find . -maxdepth  1  -type f -name "${opdate}_*dat"`
+	 do
+		echo $file
+        rm -rf $file
+	 done
   fi
   
     if [ $dir == "otherbak" ] ; then
@@ -68,4 +73,3 @@ do
 loopdir
 sleep 20h
 done
-
