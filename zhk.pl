@@ -7,11 +7,7 @@ use Date::Calc qw(Date_to_Time Time_to_Date Add_Delta_Days);
 use File::Copy;
 use Encode;
 
-=pod
-use Encode;
-encode("gbk", decode("utf-8", $str));
-encode("utf8", decode("gbk", $str));
-=cut
+
 
 main();	
 
@@ -33,6 +29,23 @@ sub main()	#定义main函数
    abc7788();
 }
 
+sub abc7788() {
+    my $current_date = strftime("%Y%m%d", localtime(time() - (3600 * 24) * 1));
+    my $path0 = "E:/PERSONAL/Duanhw/zhk/$current_date/";
+    my $path1 = 'E:/ETL/DATA/receive/';
+    opendir DIR,
+    $path0 || die "Error in opening dir $path0\n";
+    my $filename = "";
+    while (($filename = readdir(DIR))) {
+        my $file_full = $path0.$filename;
+        if ( -f $file_full) {
+            move $file_full,s
+            $path1.$filename;
+        }
+    }
+    closedir DIR
+}
+
 sub modify_sub_name
 {
    my $rootPath="E:/PERSONAL/Duanhw/zhk/";
@@ -52,14 +65,7 @@ sub modify_sub_name
    }
    close DIRFILE;
 }
-=pod
-ctei--13086
-AidSale--13087
-register--13088
-bind--13089
-gatewayInfo--13090
-devNetData--13091
-=cut
+
 sub modify_txt_dat{
    my $rootPath="E:/PERSONAL/Duanhw/zhk/";
    chdir($rootPath);
@@ -74,27 +80,30 @@ sub modify_txt_dat{
 			foreach my $sf (@subfiles){
 			   my $oldfile=$sf;
 			   my $newfile=getcwd."/".$zhangqi."/";
-			   if(getFileName($oldfile)=~/ctei/){
+			   my $oldfilename=getFileName($oldfile);
+			   
+			   if($oldfilename eq "ctei.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13086_01.dat";
-			   }elsif(getFileName($oldfile)=~/AidSale/){
+			   }elsif($oldfilename eq "AidSale.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13087_01.dat";
-			   }elsif(getFileName($oldfile)=~/register/){
+			   }elsif($oldfilename eq "register.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13088_01.dat";
-			   }elsif(getFileName($oldfile)=~/bind/){
+			   }elsif($oldfilename eq "bind.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13089_01.dat";
-			   }elsif(getFileName($oldfile)=~/gatewayInfo/){
+			   }elsif($oldfilename eq "gatewayInfo.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13090_01.dat";
-			   }elsif(getFileName($oldfile)=~/devNetData/){
+			   }elsif($oldfilename eq "devNetData.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13091_01.dat";
-			   }elsif(getFileName($oldfile)=~/cloudBag/){
+			   }elsif($oldfilename eq "cloudBag.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13092_01.dat";
-				 }elsif(getFileName($oldfile)=~/recommendRecord/){
+			   }elsif($oldfilename eq "recommendRecord.txt"){
 				 $newfile=$newfile."s_${zhangqi}_13095_01.dat";
+			   }elsif($oldfilename eq "ctei-deviceSN.txt"){
+				 $newfile=$newfile."s_${zhangqi}_13097_01.dat";
 			   }else{
 			     $newfile="";
 			   }
 			   move $oldfile,$newfile;
-			  #print $oldfile."----".getFileSize($oldfile)."\n";
 			}
 		 }
 	  }
@@ -191,6 +200,7 @@ sub create_new{
   print NEW0 $content;
   close NEW0;
 }
+
 =pod
 #=====================================================================
 sub readsub  # s_20190913_12046_00.verf
