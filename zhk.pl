@@ -6,7 +6,7 @@ use Cwd;
 use Date::Calc qw(Date_to_Time Time_to_Date Add_Delta_Days);
 use File::Copy;
 use Encode;
-
+use POSIX qw(strftime);
 
 
 main();	
@@ -39,8 +39,7 @@ sub abc7788() {
     while (($filename = readdir(DIR))) {
         my $file_full = $path0.$filename;
         if ( -f $file_full) {
-            move $file_full,s
-            $path1.$filename;
+            move $file_full,$path1.$filename;
         }
     }
     closedir DIR
