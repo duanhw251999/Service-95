@@ -1,6 +1,7 @@
 # 对/pardata/EDADATA/INTERFACE/BSS/BACKUP/下面的文件进行合并 
 # 生成校验文件
 # 将处理好的文件放入/pardata/EDADATA/INTERFACE/BSS/REALDATA/BAKCUP/
+
 #set ff=unix
 
 path0=/pardata/EDADATA/INTERFACE/BSS/BACKUP/
@@ -89,7 +90,31 @@ while :
 do
   log_date=$(date "+%Y-%m-%d %H:%M:%S")
   echo "${log_date} start........"
-  Builder 30005
+    Builder 30013
+	Movefile 30013
+	
+	Builder 30012
+	Movefile 30012
+  
+    Builder 30011
+	Movefile 30011
+  
+    Builder 30010
+	Movefile 30010
+  
+    Builder 30009
+	Movefile 30009
+  
+    Builder 30008
+	Movefile 30008
+  
+    Builder 30007
+	Movefile 30007
+  
+    Builder 30006
+	Movefile 30006
+  
+    Builder 30005
 	Movefile 30005
 	
 	Builder 30004
