@@ -1,3 +1,6 @@
+# å¯¹/pardata/EDADATA/INTERFACE/BSS/BACKUP/ä¸‹é¢çš„æ–‡ä»¶è¿›è¡Œåˆå¹¶ 
+# ç”Ÿæˆæ ¡éªŒæ–‡ä»¶
+# å°†å¤„ç†å¥½çš„æ–‡ä»¶æ”¾å…¥/pardata/EDADATA/INTERFACE/BSS/REALDATA/BAKCUP/
 #set ff=unix
 
 path0=/pardata/EDADATA/INTERFACE/BSS/BACKUP/
@@ -6,7 +9,7 @@ path1=/pardata/EDADATA/INTERFACE/BSS/REALDATA/BAKCUP/
 
 path2=/pardata/EDADATA/INTERFACE/BSS/BACKUP/real.txt
 
-#Å²¶¯ÎÄ¼ş ²¢¼ÇÂ¼
+#æŒªåŠ¨æ–‡ä»¶ å¹¶è®°å½•
 Record0() { 
         cd ${path0}${1}
         search=$(more $path2 |grep ${2})
@@ -18,7 +21,7 @@ Record0() {
         echo "===================================Record Function is Executed! ================================="
 }
 
-# ¶Ô×ÓÄ¿Â¼ÖĞµÄÎÄ¼ş½øĞĞÒÆ¶¯
+# å¯¹å­ç›®å½•ä¸­çš„æ–‡ä»¶è¿›è¡Œç§»åŠ¨
 Movefile() { 
 		cd ${path0}${1}
 		files=()
@@ -38,7 +41,7 @@ Movefile() {
 		echo "===================================Movefile Function is Executed! ================================="
 }
 
-#»ñµÃÎÄ¼ş´óĞ¡
+#è·å¾—æ–‡ä»¶å¤§å°
 getSize(){
   sizestr=$(du -b ${1})
   arr=(${sizestr// /})
@@ -48,32 +51,32 @@ getSize(){
 }
 
 
-#ºÏ²¢ÇÒÉú³ÉĞ£ÑéÎÄ¼ş
+#åˆå¹¶ä¸”ç”Ÿæˆæ ¡éªŒæ–‡ä»¶
 Builder() {
-#1.½øÈëbss/backupÄ¿Â¼
+#1.è¿›å…¥bss/backupç›®å½•
 cd ${path0}
-#2.»ñÈ¡µ±Ç°ÈÕÆÚ×Ö·û´®
+#2.è·å–å½“å‰æ—¥æœŸå­—ç¬¦ä¸²
 cur_date=`date -d "-1 day" +%Y%m%d`
 verf="s_"${cur_date}"_${1}_00.verf"
 res=$(find . -type f -name "${verf}")
 echo "================${res}"
-if [[ ! -n "$res" ]] || [[ "$res" == "" ]]; then  #Èç¹ûÃ»ÓĞÕÒµ½
+if [[ ! -n "$res" ]] || [[ "$res" == "" ]]; then  #å¦‚æœæ²¡æœ‰æ‰¾åˆ°
  echo "0 not find verf file!"
-else                  #Èç¹ûÕÒµ½
- cd ${path0}${1}  #½øÈë${1}×ÓÄ¿Â¼
+else                  #å¦‚æœæ‰¾åˆ°
+ cd ${path0}${1}  #è¿›å…¥${1}å­ç›®å½•
  iscur=$(find . -type f -name "${cur_date}_${1}.dat")
- if [[ ! -n "$iscur" ]] || [[ "$iscur" == "" ]];  then  #Èç¹ûµ±Ç°ÈÕÆÚµÄÎÄ¼şÃ»ÓĞÕÒµ½
+ if [[ ! -n "$iscur" ]] || [[ "$iscur" == "" ]];  then  #å¦‚æœå½“å‰æ—¥æœŸçš„æ–‡ä»¶æ²¡æœ‰æ‰¾åˆ°
     rm -rf *
-    cd ${path0}        #ÔÙ´Î½øÈëbss/backupÄ¿Â¼
-    cat s_${cur_date}_${1}_00_*dat > ./${1}/${cur_date}_${1}.dat #½øĞĞºÏ²¢ÎÄ¼ş
-    cd ${1}                                        #ÔÙ´Î½øÈë${1}
+    cd ${path0}        #å†æ¬¡è¿›å…¥bss/backupç›®å½•
+    cat s_${cur_date}_${1}_00_*dat > ./${1}/${cur_date}_${1}.dat #è¿›è¡Œåˆå¹¶æ–‡ä»¶
+    cd ${1}                                        #å†æ¬¡è¿›å…¥${1}
     name=${cur_date}_${1}.dat
     size=$(getSize ${path0}${1}/$name)
     echo "$name $size" > dir.bos_${1}_s${cur_date}
     #ls ${cur_date}_${1}.dat > dir.bos_${1}_s${cur_date}
-    echo "process ${1} file finished !"                    #ÌáÊ¾ĞÅÏ¢
+    echo "process ${1} file finished !"                    #æç¤ºä¿¡æ¯
  else
-                echo "process ${1} file exist !"                    #ÌáÊ¾ĞÅÏ¢
+                echo "process ${1} file exist !"                    #æç¤ºä¿¡æ¯
  fi
 fi
 echo "================process ${1} done================" 
@@ -81,7 +84,7 @@ echo "===================================Builder Function is Executed! =========
 }
 
 
-# Ö´ĞĞÇøÓò
+# æ‰§è¡ŒåŒºåŸŸ
 while : 
 do
   log_date=$(date "+%Y-%m-%d %H:%M:%S")
