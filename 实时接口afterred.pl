@@ -4,8 +4,8 @@ use File::Copy;
 use Cwd;
 
 =pod
-      	1.½øÈërealdataÄ¿Â¼
-        2.¶ÁÈ¡datÎÄ¼şºÍverfÎÄ¼ş£¬²¢½«ÎÄ¼ş·ÅÈëÈÕÆÚ+½Ó¿ÚµÄÎÄ¼ş¼ĞÄÚ
+      	1.è¿›å…¥realdataç›®å½•
+        2.è¯»å–datæ–‡ä»¶å’Œverfæ–‡ä»¶ï¼Œå¹¶å°†æ–‡ä»¶æ”¾å…¥æ—¥æœŸ+æ¥å£çš„æ–‡ä»¶å¤¹å†…
         3.
 =cut
 my %paths=(
@@ -14,7 +14,7 @@ my %paths=(
  'BAKCUP'=>'/pardata/EDADATA/INTERFACE/BSS/REALDATA/BAKCUP/'
 );
 
-# ¶ÁÈ¡´¦ÀíÄ¿Â¼
+# è¯»å–å¤„ç†ç›®å½•
 sub listdir{
 	opendir (REALDATA ,$paths{'REALDATA'}) or die "open dir faild,$!";
 	while (my $f =readdir REALDATA){
@@ -29,7 +29,7 @@ sub listdir{
 }
 
 
-# ¸ù¾İÎÄ¼şÃû³Æ´´½¨Ä¿Â¼ s_20190819_30001_00_8030662.dat
+# æ ¹æ®æ–‡ä»¶åç§°åˆ›å»ºç›®å½• s_20190819_30001_00_8030662.dat
 sub buildDir{
 	  my ($name)=@_;
 	  my @arr=split(/\_/,$name);
@@ -44,7 +44,7 @@ sub buildDir{
 	  }
 }
 
-# ¶ÁÈ¡×ÓÄ¿Â¼
+# è¯»å–å­ç›®å½•
 sub getSubdir{
 	opendir (REALDATA ,$paths{'REALDATA'}) or die "open dir faild,$!";
 	while (my $f =readdir REALDATA){
@@ -63,7 +63,7 @@ sub getSubdir{
 				 	   }else{
 								if(validcount($tpath)==1){
 										if(is_empty($paths{'BAKCUP'})==0){
-											#print "µ±Ç°Ä¿Â¼ÊÇ".getcwd."\n";
+											#print "å½“å‰ç›®å½•æ˜¯".getcwd."\n";
 											chdir($tpath);
 											my $movflag=`mv *.* $paths{'BAKCUP'}`;
 											print "move finish.....\n";
@@ -82,7 +82,7 @@ sub getSubdir{
 }
 
 
-# É¾³ı¿ÕÄ¿Â¼
+# åˆ é™¤ç©ºç›®å½•
 sub deleteEmpty{
 	opendir (REALDATA ,$paths{'REALDATA'}) or die "open dir faild,$!";
 	while (my $f =readdir REALDATA){
@@ -105,7 +105,7 @@ sub deleteEmpty{
 }
 
 
-# ¼ì²ébakcupÄ¿Â¼ÊÇ·ñÎª¿Õ
+# æ£€æŸ¥bakcupç›®å½•æ˜¯å¦ä¸ºç©º
 sub is_empty {
     my ($path)=@_;
     chdir($path);
@@ -113,13 +113,13 @@ sub is_empty {
     return $count;
 }
 
-# ×¢ÊÍ·½·¨
+# æ³¨é‡Šæ–¹æ³•
 sub msg{
 	  my ($message)=@_;
 	  print " $message ";
 }
 
-# ÅĞ¶ÏÄ¿Â¼ÖĞĞ£ÑéÎÄ¼şºÍÊı¾İÎÄ¼şÊıÊÇ·ñÏàµÈ
+# åˆ¤æ–­ç›®å½•ä¸­æ ¡éªŒæ–‡ä»¶å’Œæ•°æ®æ–‡ä»¶æ•°æ˜¯å¦ç›¸ç­‰
 sub validcount{
 	my $flag=0;
 	my ($path)=@_;
