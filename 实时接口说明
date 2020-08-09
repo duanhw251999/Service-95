@@ -1,0 +1,4 @@
+afterred文件 是将/pardata/EDADATA/INTERFACE/BSS/REALDATA/ 中的文件，放入日期文件夹
+demo2.sh 文件是将/pardata/EDADATA/INTERFACE/BSS/BACKUP 中的文件进行合并 放入30001这样的子文件夹，然后放入
+/pardata/EDADATA/INTERFACE/BSS/REALDATA/BAKCUP 文件夹中等待下载
+realtime是将文件下载到95 绕过校验，直接执行
